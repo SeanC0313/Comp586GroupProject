@@ -1,9 +1,7 @@
-﻿using Comp586GroupProject.Data;
-using Comp586GroupProject.Interfaces;
+﻿using Comp586GroupProject.Interfaces;
 using Comp586GroupProject.Models;
+using CompGroup586GroupProject.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Comp586GroupProject.Services
 {

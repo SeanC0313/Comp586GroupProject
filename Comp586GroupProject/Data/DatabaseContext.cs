@@ -1,6 +1,5 @@
 ﻿using Comp586GroupProject.Models;
 using Microsoft.EntityFrameworkCore;
-using static Android.Util.EventLogTags;
 
 namespace CompGroup586GroupProject.Data
 {
@@ -16,7 +15,7 @@ namespace CompGroup586GroupProject.Data
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Prescription> Prescriptions { get; set; }
-        public DbSet<Billing> Billings { get; set; }
+        //public DbSet<Billing> Billings { get; set; }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<insurance> insurances { get; set; }
@@ -39,17 +38,14 @@ namespace CompGroup586GroupProject.Data
             // Appointment entity configuration
             modelBuilder.Entity<Appointment>(entity =>
             {
-                entity.HasKey(a => a.AppointmentId);
+                entity.HasKey(a => a.AppointmentID);
                 entity.Property(a => a.AppointmentDate).IsRequired();
                 entity.HasOne(a => a.Patient)
                       .WithMany(p => p.Appointments)
-                      .HasForeignKey(a => a.PatientId);
-                entity.HasOne(a => a.Staff)
-                      .WithMany(s => s.Appointments)
-                      .HasForeignKey(a => a.StaffId);
+                      .HasForeignKey(a => a.PatientID);
             });
 
-            // Prescription entity configuration
+           /* // Prescription entity configuration
             modelBuilder.Entity<Prescription>(entity =>
             {
                 entity.HasKey(pr => pr.PrescriptionId);
@@ -60,7 +56,7 @@ namespace CompGroup586GroupProject.Data
                 entity.HasOne(pr => pr.Staff)
                       .WithMany(s => s.Prescriptions)
                       .HasForeignKey(pr => pr.StaffId);
-            });
+            });*/
 
             // Add other entities similarly...
         }
