@@ -3,12 +3,16 @@
     x:Class="Comp586GroupProject.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Comp586GroupProject"
-    Title="Comp586GroupProject">
+    xmlns:views="clr-namespace:Comp586GroupProject.Views"
+    Title="Comp586GroupProject"
+    Shell.FlyoutBehavior="Flyout">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <FlyoutItem Title="Dashboard" Route="dashboard">
+        <ShellContent ContentTemplate="{DataTemplate views:DashboardPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Patients" Route="patients">
+        <ShellContent ContentTemplate="{DataTemplate views:PatientsPage}" />
+    </FlyoutItem>
 
 </Shell>

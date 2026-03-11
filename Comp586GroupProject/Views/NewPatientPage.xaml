@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Comp586GroupProject.Views.NewPatientPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Register Patient">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+
+            <Entry x:Name="FirstName" Placeholder="First name" />
+            <Entry x:Name="LastName" Placeholder="Last name" />
+            <DatePicker x:Name="Dob" />
+            <Entry x:Name="Phone" Placeholder="Phone" Keyboard="Telephone" />
+            <Entry x:Name="Email" Placeholder="Email" Keyboard="Email" />
+
+            <Button Text="Save" Clicked="OnSaveClicked" />
+            <Button Text="Cancel" Clicked="OnCancelClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
