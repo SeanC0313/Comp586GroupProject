@@ -72,4 +72,19 @@
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\DashboardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NewPatientPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PatientDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PatientsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

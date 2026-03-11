@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Comp586GroupProject.Views.PatientsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Patients">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="New" Clicked="OnNewPatient" />
+    </ContentPage.ToolbarItems>
+
+    <VerticalStackLayout Padding="16" Spacing="12">
+
+        <Entry x:Name="SearchBox" Placeholder="Search by name..." TextChanged="OnSearchChanged"/>
+
+        <CollectionView x:Name="PatientsList"
+                        SelectionMode="Single"
+                        SelectionChanged="OnSelectionChanged">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="12" Margin="0,0,0,10">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="{Binding FullName}" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="{Binding Email}" FontSize="13"/>
+                            <Label Text="{Binding Phone}" FontSize="13"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentPage>
