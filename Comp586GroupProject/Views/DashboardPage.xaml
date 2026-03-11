@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="Comp586GroupProject.Views.DashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Dashboard">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+
+            <Label Text="Medical Management System" 
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   Style="{StaticResource Headline}" />
+
+            <Label Text="Quick actions"
+                   FontSize="16"
+                   FontAttributes="Bold" />
+            
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                <Button Text="Add Patient" Grid.Row="0" Grid.Column="0" Clicked="OnAddPatientClicked" />
+                <Button Text="View Appointments" Grid.Row="0" Grid.Column="1" Clicked="OnViewAppointmentsClicked" />
+                <Button Text="Manage Staff" Grid.Row="1" Grid.Column="0" Clicked="OnManageStaffClicked" />
+                <Button Text="Generate Reports" Grid.Row="1" Grid.Column="1" Clicked="OnGenerateReportsClicked" />
+            </Grid>
+            
+            <Border StrokeThickness="1"
+                Stroke="#D0D0D0"
+                Padding="14"
+                StrokeShape="RoundRectangle 12">
+
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Status" FontAttributes="Bold" />
+                    <Label Text="UI starter is running with in-memory data. Hook up DB later via services." />
+                </VerticalStackLayout>
+
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
