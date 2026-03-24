@@ -16,7 +16,7 @@ namespace Comp586GroupProject.Models
         [StringLength(50)]
         public string? LastName { get; set; }
 
-        [DataType(DataType.Date)]
+        [Column(TypeName = "date")]
         public DateTime? DOB { get; set; }
 
         [StringLength(1)]
@@ -33,5 +33,8 @@ namespace Comp586GroupProject.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
+
+        public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+        public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
     }
 }

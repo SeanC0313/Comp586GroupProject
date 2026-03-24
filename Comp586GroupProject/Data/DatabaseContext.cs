@@ -31,8 +31,8 @@ namespace Comp586GroupProject.Data
                 entity.HasKey(p => p.PatientId);
                 entity.Property(p => p.FirstName).IsRequired().HasMaxLength(100);
                 entity.Property(p => p.LastName).IsRequired().HasMaxLength(100);
-                entity.Property(p => p.DOB).HasColumnType("date");
-                entity.Property(p => p.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(p => p.CreatedAt)
+                    .ValueGeneratedOnAdd();
             });
 
             // Appointment entity configuration
@@ -112,9 +112,6 @@ namespace Comp586GroupProject.Data
             modelBuilder.Entity<Billing>(entity =>
             {
                 entity.HasKey(b => b.BillingId);
-
-                entity.Property(b => b.Amount)
-                      .HasColumnType("decimal(10,2)");
 
                 entity.Property(b => b.InsuranceCovered)
                       .HasMaxLength(50);
