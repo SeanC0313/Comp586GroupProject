@@ -2,76 +2,69 @@
 using Comp586GroupProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Comp586GroupProject.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Comp586GroupProject.Services
 {
-    public class PrescriptionService : IPrescriptionService
+    public class PrescriptionService : EfCoreServiceBase, IPrescriptionService
     {
-        private readonly DatabaseContext _context;
-
-        public PrescriptionService(DatabaseContext context)
+        public PrescriptionService(IDbContextFactory<DatabaseContext> factory) : base(factory)
         {
-            _context = context;
         }
 
-        public async Task<IEnumerable<Prescription>> GetAllPrescriptionsAsync()
-        {
-            return await _context.Prescriptions
-                                 .Include(p => p.Patient)
-                                 .Include(p => p.Staff)
-                                 .ToListAsync();
-        }
+        public Task<IEnumerable<Prescription>> GetAllPrescriptionsAsync() =>
+            WithDbAsync(async db => (await db.Prescriptions
+                .Include(p => p.Patient)
+                .Include(p => p.Staff)
+                .ToListAsync()).AsEnumerable());
 
-        public async Task<Prescription> GetPrescriptionByIdAsync(int prescriptionId)
-        {
-            return await _context.Prescriptions
-                                 .Include(p => p.Patient)
-                                 .Include(p => p.Staff)
-                                 .FirstOrDefaultAsync(p => p.PrescriptionID == prescriptionId);
-        }
+        public Task<Prescription?> GetPrescriptionByIdAsync(int prescriptionId) =>
+            WithDbAsync(db => db.Prescriptions
+                .Include(p => p.Patient)
+                .Include(p => p.Staff)
+                .FirstOrDefaultAsync(p => p.PrescriptionID == prescriptionId));
 
-        public async Task<IEnumerable<Prescription>> GetPrescriptionsByPatientIdAsync(int patientId)
-        {
-            return await _context.Prescriptions
-                                 .Include(p => p.Staff)
-                                 .Where(p => p.PatientID == patientId)
-                                 .ToListAsync();
-        }
+        public Task<IEnumerable<Prescription>> GetPrescriptionsByPatientIdAsync(int patientId) =>
+            WithDbAsync(async db => (await db.Prescriptions
+                .Include(p => p.Staff)
+                .Where(p => p.PatientID == patientId)
+                .ToListAsync()).AsEnumerable());
 
-        public async Task<Prescription> CreatePrescriptionAsync(Prescription prescription)
-        {
-            _context.Prescriptions.Add(prescription);
-            await _context.SaveChangesAsync();
-            return prescription;
-        }
+        public Task<Prescription> CreatePrescriptionAsync(Prescription prescription) =>
+            WithDbAsync(async db =>
+            {
+                db.Prescriptions.Add(prescription);
+                await db.SaveChangesAsync();
+                return prescription;
+            });
 
-        public async Task<Prescription> UpdatePrescriptionAsync(Prescription prescription)
-        {
-            var existingPrescription = await _context.Prescriptions.FindAsync(prescription.PrescriptionID);
-            if (existingPrescription == null) return null;
+        public Task<Prescription?> UpdatePrescriptionAsync(Prescription prescription) =>
+            WithDbAsync(async db =>
+            {
+                var existingPrescription = await db.Prescriptions.FindAsync(prescription.PrescriptionID);
+                if (existingPrescription is null)
+                    return null;
 
-            // Update fields
-            existingPrescription.MedicationID = prescription.MedicationID;
-            existingPrescription.Dosage = prescription.Dosage;
-            existingPrescription.StartDate = prescription.StartDate;
-            existingPrescription.EndDate = prescription.EndDate;
+                existingPrescription.MedicationID = prescription.MedicationID;
+                existingPrescription.Dosage = prescription.Dosage;
+                existingPrescription.StartDate = prescription.StartDate;
+                existingPrescription.EndDate = prescription.EndDate;
 
-            _context.Prescriptions.Update(existingPrescription);
-            await _context.SaveChangesAsync();
+                db.Prescriptions.Update(existingPrescription);
+                await db.SaveChangesAsync();
 
-            return existingPrescription;
-        }
+                return existingPrescription;
+            });
 
-        public async Task<bool> DeletePrescriptionAsync(int prescriptionId)
-        {
-            var prescription = await _context.Prescriptions.FindAsync(prescriptionId);
-            if (prescription == null) return false;
+        public Task<bool> DeletePrescriptionAsync(int prescriptionId) =>
+            WithDbAsync(async db =>
+            {
+                var entity = await db.Prescriptions.FindAsync(prescriptionId);
+                if (entity is null)
+                    return false;
 
-            _context.Prescriptions.Remove(prescription);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+                db.Prescriptions.Remove(entity);
+                await db.SaveChangesAsync();
+                return true;
+            });
     }
 }

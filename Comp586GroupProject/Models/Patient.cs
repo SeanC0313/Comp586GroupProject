@@ -36,5 +36,8 @@ namespace Comp586GroupProject.Models
 
         public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
         public virtual ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();
+        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = new List<MedicalRecord>();
+        public virtual ICollection<TreatmentPlan> TreatmentPlans { get; set; } = new List<TreatmentPlan>();
+        public virtual ICollection<LabOrder> LabOrders { get; set; } = new List<LabOrder>();
     }
 }

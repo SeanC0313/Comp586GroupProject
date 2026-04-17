@@ -5,54 +5,50 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Comp586GroupProject.Services
 {
-    public class PatientService : IPatientInterface
+    public class PatientService : EfCoreServiceBase, IPatientInterface
     {
-        private readonly DatabaseContext _context;
-
-        public PatientService(DatabaseContext context)
+        public PatientService(IDbContextFactory<DatabaseContext> factory) : base(factory)
         {
-            _context = context;
         }
 
-        public async Task<IEnumerable<Patient>> GetAllPatientsAsync()
-        {
-            return await _context.Patients
-                                 .Include(p => p.Appointments)
-                                 .Include(p => p.Prescriptions)
-                                 .ToListAsync();
-        }
+        public Task<IEnumerable<Patient>> GetAllPatientsAsync() =>
+            WithDbAsync(async db => (await db.Patients
+                .Include(p => p.Appointments)
+                .Include(p => p.Prescriptions)
+                .ToListAsync()).AsEnumerable());
 
-        public async Task<Patient> GetPatientByIdAsync(int id)
-        {
-            return await _context.Patients
-                                 .Include(p => p.Appointments)
-                                 .Include(p => p.Prescriptions)
-                                 .FirstOrDefaultAsync(p => p.PatientId == id);
-        }
+        public Task<Patient?> GetPatientByIdAsync(int id) =>
+            WithDbAsync(db => db.Patients
+                .Include(p => p.Appointments)
+                .Include(p => p.Prescriptions)
+                .FirstOrDefaultAsync(p => p.PatientId == id));
 
-        public async Task<Patient> AddPatientAsync(Patient patient)
-        {
-            _context.Patients.Add(patient);
-            await _context.SaveChangesAsync();
-            return patient;
-        }
+        public Task<Patient> AddPatientAsync(Patient patient) =>
+            WithDbAsync(async db =>
+            {
+                db.Patients.Add(patient);
+                await db.SaveChangesAsync();
+                return patient;
+            });
 
-        public async Task<Patient> UpdatePatientAsync(Patient patient)
-        {
-            _context.Patients.Update(patient);
-            await _context.SaveChangesAsync();
-            return patient;
-        }
+        public Task<Patient> UpdatePatientAsync(Patient patient) =>
+            WithDbAsync(async db =>
+            {
+                db.Patients.Update(patient);
+                await db.SaveChangesAsync();
+                return patient;
+            });
 
-        public async Task<bool> DeletePatientAsync(int id)
-        {
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
-                return false;
+        public Task<bool> DeletePatientAsync(int id) =>
+            WithDbAsync(async db =>
+            {
+                var entity = await db.Patients.FindAsync(id);
+                if (entity is null)
+                    return false;
 
-            _context.Patients.Remove(patient);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+                db.Patients.Remove(entity);
+                await db.SaveChangesAsync();
+                return true;
+            });
     }
 }

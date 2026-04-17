@@ -2,56 +2,52 @@
 using Comp586GroupProject.Interfaces;
 using Comp586GroupProject.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Comp586GroupProject.Services
 {
-    public class RoleService : IRoleService
+    public class RoleService : EfCoreServiceBase, IRoleService
     {
-        private readonly DatabaseContext _context;
-
-        public RoleService(DatabaseContext context)
+        public RoleService(IDbContextFactory<DatabaseContext> factory) : base(factory)
         {
-            _context = context;
         }
 
-        public async Task<IEnumerable<Role>> GetAllRolesAsync()
-        {
-            return await _context.Roles.ToListAsync();
-        }
+        public Task<IEnumerable<Role>> GetAllRolesAsync() =>
+            WithDbAsync(async db => (await db.Roles.ToListAsync()).AsEnumerable());
 
-        public async Task<Role> GetRoleByIdAsync(int roleId)
-        {
-            return await _context.Roles.FindAsync(roleId);
-        }
+        public Task<Role?> GetRoleByIdAsync(int roleId) =>
+            WithDbAsync(async db => await db.Roles.FindAsync(roleId));
 
-        public async Task<Role> CreateRoleAsync(Role role)
-        {
-            _context.Roles.Add(role);
-            await _context.SaveChangesAsync();
-            return role;
-        }
+        public Task<Role> CreateRoleAsync(Role role) =>
+            WithDbAsync(async db =>
+            {
+                db.Roles.Add(role);
+                await db.SaveChangesAsync();
+                return role;
+            });
 
-        public async Task<Role> UpdateRoleAsync(Role role)
-        {
-            var existing = await _context.Roles.FindAsync(role.RoleID);
-            if (existing == null) return null;
+        public Task<Role?> UpdateRoleAsync(Role role) =>
+            WithDbAsync(async db =>
+            {
+                var existing = await db.Roles.FindAsync(role.RoleID);
+                if (existing is null)
+                    return null;
 
-            existing.RoleName = role.RoleName;
+                existing.RoleName = role.RoleName;
 
-            await _context.SaveChangesAsync();
-            return existing;
-        }
+                await db.SaveChangesAsync();
+                return existing;
+            });
 
-        public async Task<bool> DeleteRoleAsync(int roleId)
-        {
-            var role = await _context.Roles.FindAsync(roleId);
-            if (role == null) return false;
+        public Task<bool> DeleteRoleAsync(int roleId) =>
+            WithDbAsync(async db =>
+            {
+                var entity = await db.Roles.FindAsync(roleId);
+                if (entity is null)
+                    return false;
 
-            _context.Roles.Remove(role);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+                db.Roles.Remove(entity);
+                await db.SaveChangesAsync();
+                return true;
+            });
     }
 }

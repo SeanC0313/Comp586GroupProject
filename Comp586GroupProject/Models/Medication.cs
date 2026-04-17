@@ -15,5 +15,11 @@ namespace Comp586GroupProject.Models
         public string Description { get; set; }
 
         public int Stock { get; set; }
+
+        public int? SupplierId { get; set; }
+
+        // Navigation property
+        [ForeignKey("SupplierId")]
+        public virtual Supplier Supplier { get; set; }
     }
 }

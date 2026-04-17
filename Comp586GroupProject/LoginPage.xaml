@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Comp586GroupProject.LoginPage"
+             Title="Staff sign in">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="16"
+            VerticalOptions="Center">
+
+            <Label
+                Text="Sign in"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Label
+                Text="Use your staff email and password."
+                Style="{StaticResource SubHeadline}" />
+
+            <Entry
+                x:Name="EmailEntry"
+                Placeholder="Email"
+                Keyboard="Email"
+                SemanticProperties.Hint="Staff email address" />
+
+            <Entry
+                x:Name="PasswordEntry"
+                Placeholder="Password"
+                IsPassword="True"
+                SemanticProperties.Hint="Password" />
+
+            <Label
+                x:Name="ErrorLabel"
+                TextColor="{AppThemeBinding Light=#C0392B, Dark=#FF6B6B}"
+                IsVisible="False" />
+
+            <Button
+                Text="Sign in"
+                Clicked="OnLoginClicked"
+                HorizontalOptions="Fill" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

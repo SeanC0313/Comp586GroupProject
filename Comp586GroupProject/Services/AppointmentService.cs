@@ -5,54 +5,50 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Comp586GroupProject.Services
 {
-    public class AppointmentService : IAppointmentInterface
+    public class AppointmentService : EfCoreServiceBase, IAppointmentInterface
     {
-        private readonly DatabaseContext _context;
-
-        public AppointmentService(DatabaseContext context)
+        public AppointmentService(IDbContextFactory<DatabaseContext> factory) : base(factory)
         {
-            _context = context;
         }
 
-        public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()
-        {
-            return await _context.Appointments
-                                 .Include(a => a.Patient)
-                                 .Include(a => a.Staff)
-                                 .ToListAsync();
-        }
+        public Task<IEnumerable<Appointment>> GetAllAppointmentsAsync() =>
+            WithDbAsync(async db => (await db.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Staff)
+                .ToListAsync()).AsEnumerable());
 
-        public async Task<Appointment> GetAppointmentByIdAsync(int id)
-        {
-            return await _context.Appointments
-                                 .Include(a => a.Patient)
-                                 .Include(a => a.Staff)
-                                 .FirstOrDefaultAsync(a => a.AppointmentID == id);
-        }
+        public Task<Appointment?> GetAppointmentByIdAsync(int id) =>
+            WithDbAsync(db => db.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Staff)
+                .FirstOrDefaultAsync(a => a.AppointmentID == id));
 
-        public async Task<Appointment> AddAppointmentAsync(Appointment appointment)
-        {
-            _context.Appointments.Add(appointment);
-            await _context.SaveChangesAsync();
-            return appointment;
-        }
+        public Task<Appointment> AddAppointmentAsync(Appointment appointment) =>
+            WithDbAsync(async db =>
+            {
+                db.Appointments.Add(appointment);
+                await db.SaveChangesAsync();
+                return appointment;
+            });
 
-        public async Task<Appointment> UpdateAppointmentAsync(Appointment appointment)
-        {
-            _context.Appointments.Update(appointment);
-            await _context.SaveChangesAsync();
-            return appointment;
-        }
+        public Task<Appointment> UpdateAppointmentAsync(Appointment appointment) =>
+            WithDbAsync(async db =>
+            {
+                db.Appointments.Update(appointment);
+                await db.SaveChangesAsync();
+                return appointment;
+            });
 
-        public async Task<bool> DeleteAppointmentAsync(int id)
-        {
-            var appointment = await _context.Appointments.FindAsync(id);
-            if (appointment == null)
-                return false;
+        public Task<bool> DeleteAppointmentAsync(int id) =>
+            WithDbAsync(async db =>
+            {
+                var entity = await db.Appointments.FindAsync(id);
+                if (entity is null)
+                    return false;
 
-            _context.Appointments.Remove(appointment);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+                db.Appointments.Remove(entity);
+                await db.SaveChangesAsync();
+                return true;
+            });
     }
 }

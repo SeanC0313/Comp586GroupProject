@@ -2,59 +2,55 @@
 using Comp586GroupProject.Models;
 using Comp586GroupProject.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Comp586GroupProject.Services
 {
-    public class MedicationService : IMedicationService
+    public class MedicationService : EfCoreServiceBase, IMedicationService
     {
-        private readonly DatabaseContext _context;
-
-        public MedicationService(DatabaseContext context)
+        public MedicationService(IDbContextFactory<DatabaseContext> factory) : base(factory)
         {
-            _context = context;
         }
 
-        public async Task<IEnumerable<Medication>> GetAllMedicationsAsync()
-        {
-            return await _context.Medications.ToListAsync();
-        }
+        public Task<IEnumerable<Medication>> GetAllMedicationsAsync() =>
+            WithDbAsync(async db => (await db.Medications.ToListAsync()).AsEnumerable());
 
-        public async Task<Medication> GetMedicationByIdAsync(int medicationId)
-        {
-            return await _context.Medications.FindAsync(medicationId);
-        }
+        public Task<Medication?> GetMedicationByIdAsync(int medicationId) =>
+            WithDbAsync(async db => await db.Medications.FindAsync(medicationId));
 
-        public async Task<Medication> CreateMedicationAsync(Medication medication)
-        {
-            _context.Medications.Add(medication);
-            await _context.SaveChangesAsync();
-            return medication;
-        }
+        public Task<Medication> CreateMedicationAsync(Medication medication) =>
+            WithDbAsync(async db =>
+            {
+                db.Medications.Add(medication);
+                await db.SaveChangesAsync();
+                return medication;
+            });
 
-        public async Task<Medication> UpdateMedicationAsync(Medication medication)
-        {
-            var existingMedication = await _context.Medications.FindAsync(medication.MedicationId);
-            if (existingMedication == null) return null;
+        public Task<Medication?> UpdateMedicationAsync(Medication medication) =>
+            WithDbAsync(async db =>
+            {
+                var existingMedication = await db.Medications.FindAsync(medication.MedicationId);
+                if (existingMedication is null)
+                    return null;
 
-            existingMedication.Name = medication.Name;
-            existingMedication.Description = medication.Description;
-            existingMedication.Stock = medication.Stock;
+                existingMedication.Name = medication.Name;
+                existingMedication.Description = medication.Description;
+                existingMedication.Stock = medication.Stock;
 
-            _context.Medications.Update(existingMedication);
-            await _context.SaveChangesAsync();
-            return existingMedication;
-        }
+                db.Medications.Update(existingMedication);
+                await db.SaveChangesAsync();
+                return existingMedication;
+            });
 
-        public async Task<bool> DeleteMedicationAsync(int medicationId)
-        {
-            var medication = await _context.Medications.FindAsync(medicationId);
-            if (medication == null) return false;
+        public Task<bool> DeleteMedicationAsync(int medicationId) =>
+            WithDbAsync(async db =>
+            {
+                var entity = await db.Medications.FindAsync(medicationId);
+                if (entity is null)
+                    return false;
 
-            _context.Medications.Remove(medication);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+                db.Medications.Remove(entity);
+                await db.SaveChangesAsync();
+                return true;
+            });
     }
 }
