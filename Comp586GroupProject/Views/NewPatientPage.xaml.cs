@@ -1,4 +1,5 @@
-﻿using Comp586GroupProject.Models;
+﻿using Comp586GroupProject.Interfaces;
+using Comp586GroupProject.Models;
 using Comp586GroupProject.Services;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,11 @@ namespace Comp586GroupProject.Views
 {
     public partial class NewPatientPage : ContentPage
     {
-        public NewPatientPage()
+        private readonly IPatientInterface _patientService;
+        public NewPatientPage(IPatientInterface patientService)
         {
             InitializeComponent();
+            _patientService = patientService;
             Dob.Date = DateTime.Today.AddYears(-18);
         }
 
@@ -29,9 +32,10 @@ namespace Comp586GroupProject.Views
             {
                 FirstName = first,
                 LastName = last,
-                DateOfBirth = Dob.Date ?? DateTime.Today,
-                Phone = (Phone.Text ?? "").Trim(),
+                DOB = Dob.Date ?? DateTime.Today,
+                PhoneNumber = (Phone.Text ?? "").Trim(),
                 Email = (Email.Text ?? "").Trim(),
+                MedicalHistory = (MedicalHistory.Text ?? "").Trim()
             };
 
             PatientStore.Add(p);

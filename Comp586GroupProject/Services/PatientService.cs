@@ -22,7 +22,7 @@ namespace Comp586GroupProject.Services
                                  .ToListAsync();
         }
 
-        public async Task<Patient> GetPatientByIdAsync(int id)
+        public async Task<Patient?> GetPatientByIdAsync(int id)
         {
             return await _context.Patients
                                  .Include(p => p.Appointments)

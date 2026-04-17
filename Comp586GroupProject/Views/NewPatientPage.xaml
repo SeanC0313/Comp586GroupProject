@@ -13,6 +13,7 @@
             <DatePicker x:Name="Dob" />
             <Entry x:Name="Phone" Placeholder="Phone" Keyboard="Telephone" />
             <Entry x:Name="Email" Placeholder="Email" Keyboard="Email" />
+			<Entry x:Name="MedicalHistory" Placeholder="MedicalHistory" Keyboard="Text" AutoSize="TextChanges" HeightRequest="100" />
 
             <Button Text="Save" Clicked="OnSaveClicked" />
             <Button Text="Cancel" Clicked="OnCancelClicked" />

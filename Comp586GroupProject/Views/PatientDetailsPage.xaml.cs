@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Comp586GroupProject.Interfaces;
 using Comp586GroupProject.Services;
 
 namespace Comp586GroupProject.Views
@@ -8,36 +9,38 @@ namespace Comp586GroupProject.Views
     [QueryProperty(nameof(Id), "id")]
     public partial class PatientDetailsPage : ContentPage
     {
+        private readonly IPatientInterface _patientService;
         private int _id;
         public string Id
         {
             set
             {
-                if (int.TryParse(value, out var parsed))
-                    _id = parsed;
+                if (int.TryParse(value, out var id))
+                    _id = id;
             }
         }
 
-        public PatientDetailsPage()
+        public PatientDetailsPage(IPatientInterface patientService)
         {
             InitializeComponent();
+            _patientService = patientService;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            var p = PatientStore.Patients.FirstOrDefault(x => x.Id == _id);
-            if (p is null)
+            var p = await _patientService.GetPatientByIdAsync(_id);
+            if (p == null)
             {
-                NameLabel.Text = "Patient not found";
+                await DisplayAlert("Error", "Patient not found.", "OK");
                 return;
             }
 
-            NameLabel.Text = p.FullName;
-            DobLabel.Text = $"DOB: {p.DateOfBirth:MMMM d, yyyy}";
+            NameLabel.Text = $"{p.FirstName} {p.LastName}";
+            DobLabel.Text = $"DOB: {p.DOB:MMMM d, yyyy}";
             EmailLabel.Text = $"Email: {p.Email}";
-            PhoneLabel.Text = $"Phone: {p.Phone}";
+            PhoneLabel.Text = $"Phone: {p.PhoneNumber}";
         }
     }
 }
