@@ -1,18 +1,30 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Comp586GroupProject.Models
 {
     public class Appointment
     {
-        public int AppointmentID { get; set; }  // Primary Key
-        public int? PatientID { get; set; }     // Foreign Key
-        public int? StaffID { get; set; }       // Foreign Key
-        public DateTime? AppointmentDate { get; set; }
-        public string Status { get; set; } = "Scheduled"; // Default status
+        [Key]
+        public int AppointmentID { get; set; }
+
+        public int? PatientID { get; set; }
+        public int? StaffID { get; set; }
+
+        [Required]
+        public DateTime AppointmentDate { get; set; }
+
+        [Required]
+        [Column(TypeName = "enum('Scheduled','Completed','Canceled')")]
+        public string Status { get; set; } = "Scheduled";
+
         public string Notes { get; set; }
 
         // Navigation properties
-        public Patient Patient { get; set; }
-        public Staff Staff { get; set; }
+        [ForeignKey("PatientID")]
+        public virtual Patient Patient { get; set; }
+        [ForeignKey("StaffID")]
+        public virtual Staff Staff { get; set; }
     }
 }
