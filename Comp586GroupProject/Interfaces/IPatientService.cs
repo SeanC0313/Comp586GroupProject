@@ -1,4 +1,4 @@
-﻿using Comp586GroupProject.Models;
+using Comp586GroupProject.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
