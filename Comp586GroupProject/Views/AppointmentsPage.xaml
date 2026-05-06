@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Comp586GroupProject.Views.AppointmentsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Appointments">
+
+    <Grid Padding="20" RowDefinitions="Auto,Auto,*" RowSpacing="12">
+        <HorizontalStackLayout Grid.Row="0" Spacing="12">
+            <SearchBar Placeholder="Search appointments"
+                       TextChanged="OnSearchChanged"
+                       HorizontalOptions="FillAndExpand" />
+            <Button Text="New Appointment"
+                    Clicked="OnNewAppointmentClicked" />
+            <Button Text="Refresh"
+                    Clicked="OnRefreshClicked" />
+        </HorizontalStackLayout>
+
+        <Label x:Name="EmptyStateLabel"
+               Grid.Row="1"
+               Text="No appointments found."
+               IsVisible="False"
+               FontSize="16" />
+
+        <CollectionView x:Name="AppointmentsList"
+                        Grid.Row="2"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,4" Padding="12">
+                        <VerticalStackLayout Spacing="6">
+                            <Label FontSize="18" FontAttributes="Bold"
+                                   Text="{Binding AppointmentDate, StringFormat='Appointment: {0:MMMM d, yyyy h:mm tt}'}" />
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Patient: " FontAttributes="Bold" />
+                                        <Span Text="{Binding Patient.FirstName}" />
+                                        <Span Text=" " />
+                                        <Span Text="{Binding Patient.LastName}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Staff: " FontAttributes="Bold" />
+                                        <Span Text="{Binding Staff.FirstName}" />
+                                        <Span Text=" " />
+                                        <Span Text="{Binding Staff.LastName}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label Text="{Binding Status, StringFormat='Status: {0}'}" />
+                            <Label Text="{Binding Notes, StringFormat='Notes: {0}'}" />
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Button Text="Edit"
+                                        Clicked="OnEditAppointmentClicked" />
+                                <Button Text="Delete"
+                                        Clicked="OnDeleteClicked" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

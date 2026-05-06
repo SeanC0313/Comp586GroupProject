@@ -1,0 +1,27 @@
+<ContentPage
+    x:Class="Comp586GroupProject.Views.MedicalRecordsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Medical Records">
+
+    <VerticalStackLayout Padding="20" Spacing="12">
+        <Entry x:Name="PatientIdEntry" Placeholder="Patient ID" Keyboard="Numeric" />
+        <Button Text="Load Records" Clicked="OnLoadClicked" />
+
+        <CollectionView x:Name="RecordsList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="12" Margin="0,4">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Diagnosis}" FontAttributes="Bold" />
+                            <Label Text="{Binding Symptoms}" />
+                            <Label Text="{Binding Notes}" />
+                            <Label Text="{Binding RecordedAt, StringFormat='Recorded: {0:MMMM d, yyyy}'}" />
+                            <Button Text="Delete" Clicked="OnDeleteClicked" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

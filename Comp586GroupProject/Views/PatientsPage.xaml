@@ -5,29 +5,52 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Patients">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="New" Clicked="OnNewPatient" />
-    </ContentPage.ToolbarItems>
+	<Grid Padding="20" RowDefinitions="Auto,Auto,*" RowSpacing="12">
+		<HorizontalStackLayout Grid.Row="0" Spacing="12">
+			<SearchBar Placeholder="Search patients"
+                       TextChanged="OnSearchChanged"
+                       HorizontalOptions="FillAndExpand" />
+			<Button Text="New Patient"
+                    Clicked="OnNewPatient" />
+		</HorizontalStackLayout>
 
-    <VerticalStackLayout Padding="16" Spacing="12">
+		<Label x:Name="EmptyStateLabel"
+               Grid.Row="1"
+               Text="No patients found."
+               IsVisible="False"
+               FontSize="16" />
 
-        <Entry x:Name="SearchBox" Placeholder="Search by name..." TextChanged="OnSearchChanged"/>
-
-        <CollectionView x:Name="PatientsList"
+		<CollectionView x:Name="PatientsList"
+                        Grid.Row="2"
                         SelectionMode="Single"
                         SelectionChanged="OnSelectionChanged">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="12" Margin="0,0,0,10">
-                        <VerticalStackLayout Spacing="2">
-                            <Label Text="{Binding FullName}" FontAttributes="Bold" FontSize="16"/>
-                            <Label Text="{Binding Email}" FontSize="13"/>
-                            <Label Text="{Binding Phone}" FontSize="13"/>
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<Frame Margin="0,4" Padding="12">
+						<VerticalStackLayout Spacing="4">
+							<Label FontAttributes="Bold" FontSize="18">
+								<Label.FormattedText>
+									<FormattedString>
+										<Span Text="{Binding FirstName}" />
+										<Span Text=" " />
+										<Span Text="{Binding LastName}" />
+									</FormattedString>
+								</Label.FormattedText>
+							</Label>
 
-    </VerticalStackLayout>
+							<Label Text="{Binding DOB, StringFormat='DOB: {0:MMMM d, yyyy}'}" />
+							<Label Text="{Binding Gender, StringFormat='Gender: {0}'}" />
+							<Label Text="{Binding Phone, StringFormat='Phone: {0}'}" />
+							<Label Text="{Binding Address, StringFormat='Address: {0}'}" />
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Button Text="Edit" Clicked="OnEditPatientClicked" />
+                                <Button Text="Delete" Clicked="OnDeletePatientClicked" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+					</Frame>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+	</Grid>
 </ContentPage>

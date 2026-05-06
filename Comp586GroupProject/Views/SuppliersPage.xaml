@@ -1,0 +1,25 @@
+<ContentPage
+    x:Class="Comp586GroupProject.Views.SuppliersPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Suppliers">
+
+    <VerticalStackLayout Padding="20" Spacing="12">
+        <CollectionView x:Name="SuppliersList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="12" Margin="0,4">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Name}" FontAttributes="Bold" />
+                            <Label Text="{Binding ContactName, StringFormat='Contact: {0}'}" />
+                            <Label Text="{Binding Phone, StringFormat='Phone: {0}'}" />
+                            <Label Text="{Binding Email, StringFormat='Email: {0}'}" />
+                            <Label Text="{Binding Address}" />
+                            <Button Text="Delete" Clicked="OnDeleteClicked" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

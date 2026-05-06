@@ -1,0 +1,24 @@
+<ContentPage
+    x:Class="Comp586GroupProject.Views.RoleManagementPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Roles">
+
+    <VerticalStackLayout Padding="20" Spacing="12">
+        <Entry x:Name="RoleNameEntry" Placeholder="Role name" />
+        <Button Text="Add Role" Clicked="OnAddClicked" />
+
+        <CollectionView x:Name="RolesList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="12" Margin="0,4">
+                        <HorizontalStackLayout Spacing="12">
+                            <Label Text="{Binding RoleName}" HorizontalOptions="FillAndExpand" />
+                            <Button Text="Delete" Clicked="OnDeleteClicked" />
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

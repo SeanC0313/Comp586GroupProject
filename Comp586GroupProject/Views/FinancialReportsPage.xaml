@@ -1,0 +1,59 @@
+<ContentPage
+    x:Class="Comp586GroupProject.Views.FinancialReportsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Financial Reports">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <DatePicker x:Name="FromDatePicker" />
+            <DatePicker x:Name="ToDatePicker" />
+            <Button Text="Refresh" Clicked="OnRefreshClicked" />
+
+            <Frame Padding="12">
+                <VerticalStackLayout>
+                    <Label x:Name="TotalBilledLabel" FontAttributes="Bold" />
+                    <Label x:Name="TotalPaidLabel" />
+                    <Label x:Name="TotalOutstandingLabel" />
+                    <Label x:Name="BillCountLabel" />
+                    <Label x:Name="StatusCountLabel" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Patient Billing Report" FontSize="20" FontAttributes="Bold" />
+
+            <CollectionView x:Name="PatientBillingList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12" Margin="0,4">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding PatientName}" FontAttributes="Bold" />
+                                <Label Text="{Binding TotalBilled, StringFormat='Billed: {0:C}'}" />
+                                <Label Text="{Binding TotalPaid, StringFormat='Paid: {0:C}'}" />
+                                <Label Text="{Binding TotalOutstanding, StringFormat='Outstanding: {0:C}'}" />
+                                <Label Text="{Binding BillCount, StringFormat='Bills: {0}'}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Outstanding Bills" FontSize="20" FontAttributes="Bold" />
+
+            <CollectionView x:Name="OutstandingBillsList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12" Margin="0,4">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding BillingId, StringFormat='Bill ID: {0}'}" FontAttributes="Bold" />
+                                <Label Text="{Binding PatientId, StringFormat='Patient ID: {0}'}" />
+                                <Label Text="{Binding Amount, StringFormat='Amount: {0:C}'}" />
+                                <Label Text="{Binding PaymentStatus, StringFormat='Status: {0}'}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

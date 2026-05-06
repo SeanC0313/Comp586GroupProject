@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Comp586GroupProject.Views.NewAppointmentPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="New Appointment">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Label Text="Patient" FontAttributes="Bold" />
+            <Picker x:Name="PatientPicker" Title="Select patient" />
+
+            <Label Text="Staff" FontAttributes="Bold" />
+            <Picker x:Name="StaffPicker" Title="Select staff member" />
+
+            <Label Text="Date" FontAttributes="Bold" />
+            <DatePicker x:Name="AppointmentDatePicker" />
+
+            <Label Text="Time" FontAttributes="Bold" />
+            <TimePicker x:Name="AppointmentTimePicker" />
+
+            <Label Text="Status" FontAttributes="Bold" />
+            <Picker x:Name="StatusPicker" Title="Select status" />
+
+            <Label Text="Notes" FontAttributes="Bold" />
+            <Editor x:Name="NotesEditor"
+                    Placeholder="Appointment notes"
+                    AutoSize="TextChanges"
+                    HeightRequest="120" />
+
+            <HorizontalStackLayout Spacing="12">
+                <Button Text="Save" Clicked="OnSaveClicked" />
+                <Button Text="Cancel" Clicked="OnCancelClicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

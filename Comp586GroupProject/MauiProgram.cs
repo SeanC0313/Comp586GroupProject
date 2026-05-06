@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Comp586GroupProject.Services;
-using Comp586GroupProject.Interfaces;
 
 namespace Comp586GroupProject
 {
@@ -28,9 +26,29 @@ namespace Comp586GroupProject
             builder.Services.AddScoped<IPatientInterface, PatientService>();
 
             builder.Services.AddTransient<Views.DashboardPage>();
-            builder.Services.AddTransient<Views.PatientDetailsPage>();
+            builder.Services.AddTransient<Views.PatientsPage>();
             builder.Services.AddTransient<Views.NewPatientPage>();
             builder.Services.AddTransient<Views.PatientDetailsPage>();
+            builder.Services.AddTransient<Views.EditPatientPage>();
+
+            builder.Services.AddTransient<Views.AppointmentsPage>();
+            builder.Services.AddTransient<Views.NewAppointmentPage>();
+            builder.Services.AddTransient<Views.EditAppointmentPage>();
+
+            builder.Services.AddTransient<Views.StaffPage>();
+            builder.Services.AddTransient<Views.NewStaffPage>();
+            builder.Services.AddTransient<Views.EditStaffPage>();
+
+            builder.Services.AddTransient<Views.ReportsPage>();
+
+            builder.Services.AddTransient<Views.MedicalRecordsPage>();
+            builder.Services.AddTransient<Views.PrescriptionsPage>();
+            builder.Services.AddTransient<Views.LabsPage>();
+            builder.Services.AddTransient<Views.RoleManagementPage>();
+            builder.Services.AddTransient<Views.BillingPage>();
+            builder.Services.AddTransient<Views.InsurancePage>();
+            builder.Services.AddTransient<Views.SuppliersPage>();
+            builder.Services.AddTransient<Views.FinancialReportsPage>();
 
             var connectionString = builder.Configuration.GetConnectionString("MedicalDb");
             if (string.IsNullOrWhiteSpace(connectionString))
@@ -70,7 +88,22 @@ namespace Comp586GroupProject
 #endif
 
             var app = builder.Build();
-            SeedRolesAsync(app).GetAwaiter().GetResult();
+
+            // SeedRolesAsync(app).GetAwaiter().GetResult();
+
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    await SeedRolesAsync(app);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("SeedRolesAsync failed:");
+                    System.Diagnostics.Debug.WriteLine(ex.ToString());
+                }
+            });
+
             return app;
         }
 
