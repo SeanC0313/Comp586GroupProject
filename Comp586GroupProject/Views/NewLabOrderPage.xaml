@@ -1,0 +1,21 @@
+<ContentPage
+    x:Class="Comp586GroupProject.Views.NewLabOrderPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="New Lab Order">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Entry x:Name="PatientIdEntry" Placeholder="Patient ID" Keyboard="Numeric" />
+            <Entry x:Name="StaffIdEntry" Placeholder="Staff ID" Keyboard="Numeric" />
+            <Entry x:Name="LabTestIdEntry" Placeholder="Lab Test ID" Keyboard="Numeric" />
+            <Picker x:Name="StatusPicker" Title="Status" />
+            <Editor x:Name="NotesEditor" Placeholder="Notes" AutoSize="TextChanges" />
+
+            <HorizontalStackLayout Spacing="12">
+                <Button Text="Save" Clicked="OnSaveClicked" />
+                <Button Text="Cancel" Clicked="OnCancelClicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

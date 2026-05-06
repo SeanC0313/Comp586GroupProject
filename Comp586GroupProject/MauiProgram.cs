@@ -50,6 +50,14 @@ namespace Comp586GroupProject
             builder.Services.AddTransient<Views.SuppliersPage>();
             builder.Services.AddTransient<Views.FinancialReportsPage>();
 
+            builder.Services.AddTransient<Views.NewBillingPage>();
+            builder.Services.AddTransient<Views.NewPrescriptionPage>();
+            builder.Services.AddTransient<Views.NewMedicalRecordPage>();
+            builder.Services.AddTransient<Views.NewInsurancePage>();
+            builder.Services.AddTransient<Views.NewSupplierPage>();
+            builder.Services.AddTransient<Views.NewLabTestPage>();
+            builder.Services.AddTransient<Views.NewLabOrderPage>();
+
             var connectionString = builder.Configuration.GetConnectionString("MedicalDb");
             if (string.IsNullOrWhiteSpace(connectionString))
             {

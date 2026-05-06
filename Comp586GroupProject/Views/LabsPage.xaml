@@ -8,6 +8,11 @@
         <VerticalStackLayout Padding="20" Spacing="16">
             <Label Text="Lab Tests" FontSize="22" FontAttributes="Bold" />
 
+			<HorizontalStackLayout Spacing="12">
+				<Button Text="New Lab Test" Clicked="OnNewLabTestClicked" />
+				<Button Text="New Lab Order" Clicked="OnNewLabOrderClicked" />
+			</HorizontalStackLayout>
+
             <CollectionView x:Name="LabTestsList">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

@@ -5,6 +5,8 @@
     Title="Suppliers">
 
     <VerticalStackLayout Padding="20" Spacing="12">
+		<SearchBar Placeholder="Search suppliers" TextChanged="OnSearchChanged" HorizontalOptions="FillAndExpand" />
+		<Button Text="New Supplier" Clicked="OnNewSupplierClicked" />
         <CollectionView x:Name="SuppliersList">
             <CollectionView.ItemTemplate>
                 <DataTemplate>

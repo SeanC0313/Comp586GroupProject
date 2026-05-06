@@ -5,8 +5,9 @@
     Title="Prescriptions">
 
     <VerticalStackLayout Padding="20" Spacing="12">
-        <Button Text="Refresh" Clicked="OnRefreshClicked" />
-
+		<Button Text="New Prescription" Clicked="OnNewPrescriptionClicked" />
+		<SearchBar Placeholder="Search prescriptions" TextChanged="OnSearchChanged" />
+		
         <CollectionView x:Name="PrescriptionsList">
             <CollectionView.ItemTemplate>
                 <DataTemplate>

@@ -5,7 +5,9 @@
     Title="Billing">
 
     <VerticalStackLayout Padding="20" Spacing="12">
-        <CollectionView x:Name="BillingList">
+		<Button Text="New Billing" Clicked="OnNewBillingClicked" />
+		<SearchBar Placeholder="Search billing" TextChanged="OnSearchChanged" HorizontalOptions="FillAndExpand" />
+		<CollectionView x:Name="BillingList">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Padding="12" Margin="0,4">

@@ -3,7 +3,7 @@ using Comp586GroupProject.Models;
 
 namespace Comp586GroupProject.Views;
 
-[QueryProperty(nameof(Id), "id")]
+[QueryProperty(nameof(StaffIdQuery), "id")]
 public partial class EditStaffPage : ContentPage
 {
     private readonly IStaffService _staffService;

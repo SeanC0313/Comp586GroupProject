@@ -45,5 +45,15 @@ namespace Comp586GroupProject.Views
             await _labService.DeleteOrderAsync(order.LabOrderId);
             OnLoadOrdersClicked(sender, e);
         }
+
+        private async void OnNewLabTestClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(NewLabTestPage));
+        }
+
+        private async void OnNewLabOrderClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(NewLabOrderPage));
+        }
     }
 }

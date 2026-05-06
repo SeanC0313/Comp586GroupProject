@@ -7,6 +7,7 @@
     <VerticalStackLayout Padding="20" Spacing="12">
         <Entry x:Name="RoleNameEntry" Placeholder="Role name" />
         <Button Text="Add Role" Clicked="OnAddClicked" />
+		<SearchBar Placeholder="Search roles" TextChanged="OnSearchChanged" HorizontalOptions="FillAndExpand" />
 
         <CollectionView x:Name="RolesList">
             <CollectionView.ItemTemplate>

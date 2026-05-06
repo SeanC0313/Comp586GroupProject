@@ -29,5 +29,13 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(Views.InsurancePage), typeof(Views.InsurancePage));
         Routing.RegisterRoute(nameof(Views.SuppliersPage), typeof(Views.SuppliersPage));
         Routing.RegisterRoute(nameof(Views.FinancialReportsPage), typeof(Views.FinancialReportsPage));
+
+        Routing.RegisterRoute(nameof(Views.NewBillingPage), typeof(Views.NewBillingPage));
+        Routing.RegisterRoute(nameof(Views.NewPrescriptionPage), typeof(Views.NewPrescriptionPage));
+        Routing.RegisterRoute(nameof(Views.NewMedicalRecordPage), typeof(Views.NewMedicalRecordPage));
+        Routing.RegisterRoute(nameof(Views.NewInsurancePage), typeof(Views.NewInsurancePage));
+        Routing.RegisterRoute(nameof(Views.NewSupplierPage), typeof(Views.NewSupplierPage));
+        Routing.RegisterRoute(nameof(Views.NewLabTestPage), typeof(Views.NewLabTestPage));
+        Routing.RegisterRoute(nameof(Views.NewLabOrderPage), typeof(Views.NewLabOrderPage));
     }
 }

@@ -5,6 +5,8 @@
     Title="Insurance">
 
     <VerticalStackLayout Padding="20" Spacing="12">
+		<SearchBar Placeholder="Search insurance" TextChanged="OnSearchChanged" HorizontalOptions="FillAndExpand" />
+		<Button Text="New Insurance" Clicked="OnNewInsuranceClicked" />
         <CollectionView x:Name="InsuranceList">
             <CollectionView.ItemTemplate>
                 <DataTemplate>

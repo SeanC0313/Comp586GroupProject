@@ -3,7 +3,7 @@ using Comp586GroupProject.Models;
 
 namespace Comp586GroupProject.Views;
 
-[QueryProperty(nameof(Id), "id")]
+[QueryProperty(nameof(AppointmentIdQuery), "id")]
 public partial class EditAppointmentPage : ContentPage
 {
     private readonly IAppointmentInterface _appointmentService;

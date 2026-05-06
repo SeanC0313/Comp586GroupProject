@@ -3,7 +3,7 @@ using Comp586GroupProject.Models;
 
 namespace Comp586GroupProject.Views;
 
-[QueryProperty(nameof(Id), "id")]
+[QueryProperty(nameof(PatientIdQuery), "id")]
 public partial class PatientDetailsPage : ContentPage
 {
     private readonly IPatientInterface _patientService;
