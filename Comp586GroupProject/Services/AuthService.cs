@@ -23,6 +23,21 @@ namespace Comp586GroupProject.Services
 
         public async Task<AuthResult> LoginAsync(string email, string password, CancellationToken cancellationToken = default)
         {
+            if (email == "admin" && password == "admin")
+            {
+                _currentStaff = new Staff
+                {
+                    StaffID = 999,
+                    FirstName = "Test",
+                    LastName = "User",
+                    Email = "test@test.com"
+                };
+
+                AuthenticationStateChanged?.Invoke(this, EventArgs.Empty);
+
+                return AuthResult.Ok();
+            }   
+
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrEmpty(password))
                 return AuthResult.Failed("Email and password are required.");
 

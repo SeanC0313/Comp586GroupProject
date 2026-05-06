@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Comp586GroupProject.Views.StaffPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Staff">
+
+    <Grid Padding="20" RowDefinitions="Auto,Auto,*" RowSpacing="12">
+        <HorizontalStackLayout Grid.Row="0" Spacing="12">
+            <SearchBar Placeholder="Search staff"
+                       TextChanged="OnSearchChanged"
+                       HorizontalOptions="FillAndExpand" />
+            <Button Text="New Staff"
+                    Clicked="OnNewStaffClicked" />
+            <Button Text="Refresh"
+                    Clicked="OnRefreshClicked" />
+        </HorizontalStackLayout>
+
+        <Label x:Name="EmptyStateLabel"
+               Grid.Row="1"
+               Text="No staff found."
+               IsVisible="False"
+               FontSize="16" />
+
+        <CollectionView x:Name="StaffList"
+                        Grid.Row="2"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,4" Padding="12">
+                        <VerticalStackLayout Spacing="6">
+                            <Label FontSize="18" FontAttributes="Bold">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding FirstName}" />
+                                        <Span Text=" " />
+                                        <Span Text="{Binding LastName}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label Text="{Binding Email, StringFormat='Email: {0}'}" />
+                            <Label Text="{Binding Specialty, StringFormat='Specialty: {0}'}" />
+                            <Label Text="{Binding Role.RoleName, StringFormat='Role: {0}'}" />
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Button Text="Edit"
+                                        Clicked="OnEditStaffClicked" />
+                                <Button Text="Delete"
+                                        Clicked="OnDeleteClicked" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

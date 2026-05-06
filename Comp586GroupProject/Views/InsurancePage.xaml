@@ -1,0 +1,25 @@
+<ContentPage
+    x:Class="Comp586GroupProject.Views.InsurancePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Insurance">
+
+    <VerticalStackLayout Padding="20" Spacing="12">
+		<SearchBar Placeholder="Search insurance" TextChanged="OnSearchChanged" HorizontalOptions="FillAndExpand" />
+		<Button Text="New Insurance" Clicked="OnNewInsuranceClicked" />
+        <CollectionView x:Name="InsuranceList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="12" Margin="0,4">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding ProviderName}" FontAttributes="Bold" />
+                            <Label Text="{Binding Phone, StringFormat='Phone: {0}'}" />
+                            <Label Text="{Binding CoverageDetails}" />
+                            <Button Text="Delete" Clicked="OnDeleteClicked" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,52 @@
+<ContentPage
+    x:Class="Comp586GroupProject.Views.LabsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Labs">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="Lab Tests" FontSize="22" FontAttributes="Bold" />
+
+			<HorizontalStackLayout Spacing="12">
+				<Button Text="New Lab Test" Clicked="OnNewLabTestClicked" />
+				<Button Text="New Lab Order" Clicked="OnNewLabOrderClicked" />
+			</HorizontalStackLayout>
+
+            <CollectionView x:Name="LabTestsList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12" Margin="0,4">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                <Label Text="{Binding Description}" />
+                                <Label Text="{Binding ReferenceRange, StringFormat='Reference: {0}'}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Lab Orders by Patient" FontSize="22" FontAttributes="Bold" />
+            <Entry x:Name="PatientIdEntry" Placeholder="Patient ID" Keyboard="Numeric" />
+            <Button Text="Load Orders" Clicked="OnLoadOrdersClicked" />
+
+            <CollectionView x:Name="LabOrdersList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12" Margin="0,4">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding LabOrderId, StringFormat='Order ID: {0}'}" FontAttributes="Bold" />
+                                <Label Text="{Binding LabTest.Name, StringFormat='Test: {0}'}" />
+                                <Label Text="{Binding Status, StringFormat='Status: {0}'}" />
+                                <Label Text="{Binding Notes}" />
+                                <Label Text="{Binding OrderedAt, StringFormat='Ordered: {0:MMMM d, yyyy}'}" />
+                                <Button Text="Delete Order" Clicked="OnDeleteOrderClicked" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

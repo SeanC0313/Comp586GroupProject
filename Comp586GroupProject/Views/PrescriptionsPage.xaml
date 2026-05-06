@@ -1,0 +1,29 @@
+<ContentPage
+    x:Class="Comp586GroupProject.Views.PrescriptionsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Prescriptions">
+
+    <VerticalStackLayout Padding="20" Spacing="12">
+		<Button Text="New Prescription" Clicked="OnNewPrescriptionClicked" />
+		<SearchBar Placeholder="Search prescriptions" TextChanged="OnSearchChanged" />
+		
+        <CollectionView x:Name="PrescriptionsList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="12" Margin="0,4">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Dosage}" FontAttributes="Bold"/>
+                            <Label Text="{Binding PatientID, StringFormat='Patient ID: {0}'}" />
+                            <Label Text="{Binding StaffID, StringFormat='Staff ID: {0}'}" />
+                            <Label Text="{Binding MedicationID, StringFormat='Medication ID: {0}'}" />
+                            <Label Text="{Binding StartDate, StringFormat='Start: {0:MMMM d, yyyy}'}" />
+                            <Label Text="{Binding EndDate, StringFormat='End: {0:MMMM d, yyyy}'}" />
+                            <Button Text="Delete" Clicked="OnDeleteClicked" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

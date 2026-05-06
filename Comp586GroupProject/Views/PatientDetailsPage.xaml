@@ -5,13 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="Patient Details">
 
-    <VerticalStackLayout Padding="20" Spacing="10">
-        <Label x:Name="NameLabel" FontSize="22" FontAttributes="Bold"/>
-        <Label x:Name="DobLabel"/>
-        <Label x:Name="EmailLabel"/>
-        <Label x:Name="PhoneLabel"/>
-
-        <Button Text="Schedule Appointment (stub)" IsEnabled="False"/>
-        <Button Text="Create Invoice (stub)" IsEnabled="False"/>
+	<VerticalStackLayout Padding="20" Spacing="12">
+		<Label x:Name="NameLabel" FontSize="24" FontAttributes="Bold" />
+		<Label x:Name="DobLabel" FontSize="16" />
+		<Label x:Name="GenderLabel" FontSize="16" />
+		<Label x:Name="PhoneLabel" FontSize="16" />
+        <Label x:Name="EmailLabel" FontSize="16" />
+        <Label x:Name="AddressLabel" FontSize="16" />
+        <Label x:Name="InsuranceIdLabel" FontSize="16" />
+        <Label x:Name="MedicalHistoryLabel" FontSize="16" />
+        <Button Text="Medical Records" Clicked="OnMedicalRecordsClicked" />
+        <Button Text="Prescriptions" Clicked="OnPrescriptionsClicked" />
+        <Button Text="Labs" Clicked="OnLabsClicked" />
+        <Button Text="Billing" Clicked="OnBillingClicked" />
     </VerticalStackLayout>
 </ContentPage>

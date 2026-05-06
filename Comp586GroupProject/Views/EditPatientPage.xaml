@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Comp586GroupProject.Views.EditPatientPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Edit Patient">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Entry x:Name="FirstNameEntry" Placeholder="First name" />
+            <Entry x:Name="LastNameEntry" Placeholder="Last name" />
+            <DatePicker x:Name="DobPicker" />
+            <Picker x:Name="GenderPicker" Title="Gender" />
+            <Entry x:Name="PhoneEntry" Placeholder="Phone" Keyboard="Telephone" />
+			<Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" />
+            <Editor x:Name="AddressEntry" Placeholder="Address" AutoSize="TextChanges" />
+			<Editor x:Name="MedicalHistoryEditor" Placeholder="Medical history" AutoSize="TextChanges" />
+			<Entry x:Name="InsuranceIdEntry" Placeholder="Insurance ID" Keyboard="Numeric" />
+
+            <HorizontalStackLayout Spacing="12">
+                <Button Text="Save" Clicked="OnSaveClicked" />
+                <Button Text="Cancel" Clicked="OnCancelClicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

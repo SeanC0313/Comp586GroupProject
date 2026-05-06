@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Comp586GroupProject.Views.ReportsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Reports">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+
+            <HorizontalStackLayout>
+                <Button Text="Refresh"
+                        Clicked="OnRefreshClicked" />
+            </HorizontalStackLayout>
+
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                <Frame Grid.Row="0" Grid.Column="0" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Total Patients" FontAttributes="Bold" FontSize="16" />
+                        <Label x:Name="TotalPatientsLabel" FontSize="28" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Row="0" Grid.Column="1" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Total Appointments" FontAttributes="Bold" FontSize="16" />
+                        <Label x:Name="TotalAppointmentsLabel" FontSize="28" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Row="1" Grid.Column="0" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Total Staff" FontAttributes="Bold" FontSize="16" />
+                        <Label x:Name="TotalStaffLabel" FontSize="28" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Row="1" Grid.Column="1" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Today's Appointments" FontAttributes="Bold" FontSize="16" />
+                        <Label x:Name="TodaysAppointmentsLabel" FontSize="28" />
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <Frame Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Upcoming Appointments"
+                           FontAttributes="Bold"
+                           FontSize="18" />
+
+                    <CollectionView x:Name="UpcomingAppointmentsCollection"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Padding="0,6">
+                                    <Label FontAttributes="Bold"
+                                           Text="{Binding AppointmentDate, StringFormat='{}{0:MMMM d, yyyy h:mm tt}'}" />
+
+                                    <Label>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Patient: " FontAttributes="Bold" />
+                                                <Span Text="{Binding Patient.FirstName}" />
+                                                <Span Text=" " />
+                                                <Span Text="{Binding Patient.LastName}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Staff: " FontAttributes="Bold" />
+                                                <Span Text="{Binding Staff.FirstName}" />
+                                                <Span Text=" " />
+                                                <Span Text="{Binding Staff.LastName}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Text="{Binding Status, StringFormat='Status: {0}'}" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Staff by Role"
+                           FontAttributes="Bold"
+                           FontSize="18" />
+
+                    <CollectionView x:Name="StaffByRoleCollection"
+                                    SelectionMode="None" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Appointment Status Summary"
+                           FontAttributes="Bold"
+                           FontSize="18" />
+
+                    <CollectionView x:Name="AppointmentStatusCollection"
+                                    SelectionMode="None" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

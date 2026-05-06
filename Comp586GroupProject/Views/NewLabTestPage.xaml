@@ -1,0 +1,19 @@
+<ContentPage
+    x:Class="Comp586GroupProject.Views.NewLabTestPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="New Lab Test">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Entry x:Name="NameEntry" Placeholder="Test Name" />
+            <Editor x:Name="DescriptionEditor" Placeholder="Description" AutoSize="TextChanges" />
+            <Entry x:Name="ReferenceRangeEntry" Placeholder="Reference Range" />
+
+            <HorizontalStackLayout Spacing="12">
+                <Button Text="Save" Clicked="OnSaveClicked" />
+                <Button Text="Cancel" Clicked="OnCancelClicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

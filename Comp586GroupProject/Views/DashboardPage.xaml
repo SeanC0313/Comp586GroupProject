@@ -17,11 +17,19 @@
                    FontSize="16"
                    FontAttributes="Bold" />
             
-            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
                 <Button Text="Add Patient" Grid.Row="0" Grid.Column="0" Clicked="OnAddPatientClicked" />
                 <Button Text="View Appointments" Grid.Row="0" Grid.Column="1" Clicked="OnViewAppointmentsClicked" />
                 <Button Text="Manage Staff" Grid.Row="1" Grid.Column="0" Clicked="OnManageStaffClicked" />
                 <Button Text="Generate Reports" Grid.Row="1" Grid.Column="1" Clicked="OnGenerateReportsClicked" />
+                <Button Text="Medical Records" Grid.Row="2" Grid.Column="0" Clicked="OnMedicalRecordsClicked" />
+                <Button Text="Prescriptions" Grid.Row="2" Grid.Column="1" Clicked="OnPrescriptionsClicked" />
+                <Button Text="Labs" Grid.Row="3" Grid.Column="0" Clicked="OnLabsClicked" />
+                <Button Text="Roles" Grid.Row="3" Grid.Column="1" Clicked="OnRolesClicked" />
+                <Button Text="Billing" Grid.Row="4" Grid.Column="0" Clicked="OnBillingClicked" />
+                <Button Text="Insurance" Grid.Row="4" Grid.Column="1" Clicked="OnInsuranceClicked" />
+                <Button Text="Suppliers" Grid.Row="5" Grid.Column="0" Clicked="OnSuppliersClicked" />
+                <Button Text="Financial Reports" Grid.Row="5" Grid.Column="1" Clicked="OnFinancialReportsClicked" />
             </Grid>
             
             <Border StrokeThickness="1"

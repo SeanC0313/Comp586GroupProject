@@ -1,0 +1,22 @@
+<ContentPage
+    x:Class="Comp586GroupProject.Views.NewPrescriptionPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="New Prescription">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <Entry x:Name="PatientIdEntry" Placeholder="Patient ID" Keyboard="Numeric" />
+            <Entry x:Name="StaffIdEntry" Placeholder="Staff ID" Keyboard="Numeric" />
+            <Entry x:Name="MedicationIdEntry" Placeholder="Medication ID" Keyboard="Numeric" />
+            <Entry x:Name="DosageEntry" Placeholder="Dosage" />
+            <DatePicker x:Name="StartDatePicker" />
+            <DatePicker x:Name="EndDatePicker" />
+
+            <HorizontalStackLayout Spacing="12">
+                <Button Text="Save" Clicked="OnSaveClicked" />
+                <Button Text="Cancel" Clicked="OnCancelClicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

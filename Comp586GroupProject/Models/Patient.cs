@@ -27,7 +27,11 @@ namespace Comp586GroupProject.Models
         public string? Phone { get; set; }
 
         [StringLength(100)]
+        public string? Email { get; set; }
+
         public string? Address { get; set; }
+
+        public string? MedicalHistory { get; set; }
 
         public int? InsuranceId { get; set; }
 

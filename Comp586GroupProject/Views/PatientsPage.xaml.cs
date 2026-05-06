@@ -1,55 +1,102 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Comp586GroupProject.Interfaces;
 using Comp586GroupProject.Models;
-using Comp586GroupProject.Services;
 
-namespace Comp586GroupProject.Views
+namespace Comp586GroupProject.Views;
+
+public partial class PatientsPage : ContentPage
 {
-    public partial class PatientsPage : ContentPage
+    private readonly IPatientInterface _patientService;
+    private List<Patient> _allPatients = new();
+
+    public PatientsPage(IPatientInterface patientService)
     {
-        private List<Patient> _all = new();
+        InitializeComponent();
+        _patientService = patientService;
+    }
 
-        public PatientsPage()
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await LoadPatientsAsync();
+    }
+
+    private async Task LoadPatientsAsync()
+    {
+        try
         {
-            InitializeComponent();
+            var patients = await _patientService.GetAllPatientsAsync();
+            _allPatients = patients.ToList();
+            PatientsList.ItemsSource = _allPatients;
+            EmptyStateLabel.IsVisible = _allPatients.Count == 0;
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Could not load patients: {ex.Message}", "OK");
+        }
+    }
+
+    private async void OnNewPatient(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(NewPatientPage));
+    }
+
+    private void OnSearchChanged(object sender, TextChangedEventArgs e)
+    {
+        var q = (e.NewTextValue ?? "").Trim().ToLowerInvariant();
+
+        if (string.IsNullOrWhiteSpace(q))
+        {
+            PatientsList.ItemsSource = _allPatients;
+            return;
         }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            _all = PatientStore.Patients.ToList();
-            PatientsList.ItemsSource = _all;
-        }
+        PatientsList.ItemsSource = _allPatients
+            .Where(p =>
+                $"{p.FirstName} {p.LastName}".ToLowerInvariant().Contains(q) ||
+                (p.Phone ?? "").ToLowerInvariant().Contains(q) ||
+                (p.Address ?? "").ToLowerInvariant().Contains(q))
+            .ToList();
+    }
 
-        private async void OnNewPatient(object sender, EventArgs e)
-            => await Shell.Current.GoToAsync(nameof(NewPatientPage));
+    private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var selected = e.CurrentSelection?.FirstOrDefault() as Patient;
+        if (selected is null)
+            return;
 
-        private void OnSearchChanged(object sender, TextChangedEventArgs e)
+        PatientsList.SelectedItem = null;
+        await Shell.Current.GoToAsync($"{nameof(PatientDetailsPage)}?id={selected.PatientId}");
+    }
+
+    private async void OnEditPatientClicked(object sender, EventArgs e)
+    {
+        try
         {
-            var q = (e.NewTextValue ?? "").Trim().ToLowerInvariant();
-            if (string.IsNullOrEmpty(q))
-            {
-                PatientsList.ItemsSource = _all;
+            if (sender is not Button button || button.BindingContext is not Patient patient)
                 return;
-            }
-
-            PatientsList.ItemsSource = _all.Where(p =>
-                p.FullName.ToLowerInvariant().Contains(q) ||
-                p.Email.ToLowerInvariant().Contains(q) ||
-                p.Phone.ToLowerInvariant().Contains(q)
-            ).ToList();
+            await Shell.Current.GoToAsync($"{nameof(EditPatientPage)}?id={patient.PatientId}");
         }
-
-        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        catch (Exception ex)
         {
-            var selected = e.CurrentSelection?.FirstOrDefault() as Patient;
-            if (selected is null) return;
+            await DisplayAlert("Error", $"Could not navigate to edit page: {ex.Message}", "OK");
+        }
+    }
 
-            // Clear selection so user can tap again later
-            PatientsList.SelectedItem = null;
-
-            await Shell.Current.GoToAsync($"{nameof(PatientDetailsPage)}?id={selected.Id}");
+    private async void OnDeletePatientClicked(object sender, EventArgs e)
+    {
+        if (sender is not Button button || button.BindingContext is not Patient patient)
+            return;
+        bool confirm = await DisplayAlert("Confirm Delete", $"Are you sure you want to delete {patient.FirstName} {patient.LastName}?", "Delete", "Cancel");
+        if (!confirm)
+            return;
+        try
+        {
+            await _patientService.DeletePatientAsync(patient.PatientId);
+            await LoadPatientsAsync();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Could not delete patient: {ex.Message}", "OK");
         }
     }
 }
